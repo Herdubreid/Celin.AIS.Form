@@ -7,7 +7,7 @@ namespace Celin.AIS.Form
     {
         public record Type(bool variable, string literal, int index);
         static readonly Parser<char, Type> PLAIN
-            = Try(LetterOrDigit.ManyString().Select(s => new Type(false, s, -1)));
+            = Try(LetterOrDigit.Or(Char('.')).ManyString().Select(s => new Type(false, s, -1)));
         static readonly Parser<char, Type> QUOTED
             = AnyCharExcept('"')
                 .ManyString()
