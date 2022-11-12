@@ -10,6 +10,7 @@ namespace Celin.AIS.Form
         public record Type(OpenType open, IEnumerable<ExecuteType> execute);
         public IEnumerable<Type>? Chain { get; set; }
         public FormRequest? Demo { get; set; }
+        public bool BreakOE { get; set; }
         static ExecuteType ActionRequest(StackExecute.Type t, int row, IEnumerable<object> cols)
             => new ExecuteType(new ActionRequest
             {
@@ -17,8 +18,9 @@ namespace Celin.AIS.Form
                 formActions = t.actions.Select(a => a.action ?? FormAction.Make(a.formAction, row, cols))
             }, t.outputs.HasValue ? Maybe.Just(Output.Parse(t.outputs.Value, row, cols)) : t.outputs);
         public static Parser<char, StackFormRequestChain> Parser
-            => Map((o, ex, es) => new StackFormRequestChain
+            => Map((o, brk, ex, es) => new StackFormRequestChain
             {
+                BreakOE = brk.HasValue ? brk.Value : false,
                 Demo = o.form.demo && !ex.Any()
                 ? new FormRequest
                 {
@@ -72,6 +74,7 @@ namespace Celin.AIS.Form
                     }
             },
                 Data.Skipper.Next(StackOpen.Parser),
+                Data.Skipper.Next(BreakOnError.Parser.Optional()),
                 Data.Skipper.Next(StackExecute.Parser),
                 Data.Skipper.Next(Each.Parser.Optional()));
     }
