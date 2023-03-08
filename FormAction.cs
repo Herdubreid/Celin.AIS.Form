@@ -29,6 +29,10 @@ namespace Celin.AIS.Form
             = Map((a, p) => new Type(p.id, a, p.value),
                 Try(String("set")).ThenReturn(AIS.FormAction.SetControlValue),
                 SETPARAMETERS.Between(Char('('), Char(')')));
+        static readonly Parser<char, Type> RADIO
+            = Map((a, p) => new Type(p.id, a, p.value),
+                Try(String("radio")).ThenReturn(AIS.FormAction.SetRadioButton),
+                SETPARAMETERS.Between(Char('('), Char(')')));
         static readonly Parser<char, Type> DO
             = Map((a, id) => new Type(id, a, Maybe.Nothing<Value.Type>()),
                 Try(String("do")).ThenReturn(AIS.FormAction.DoAction),
@@ -54,6 +58,6 @@ namespace Celin.AIS.Form
                 Try(String("qbe")).ThenReturn(AIS.FormAction.SetQBEValue),
                 QBEPARAMETERS.Between(Char('('), Char(')')));
         public static Parser<char, Action.Type> Parser
-            => OneOf(DO, SET, SELECT, QBE).Select(t => new Action.Type(null, t));
+            => OneOf(DO, SET, RADIO, SELECT, QBE).Select(t => new Action.Type(null, t));
     }
 }

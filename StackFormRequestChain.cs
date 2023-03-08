@@ -42,6 +42,7 @@ namespace Celin.AIS.Form
                                     formName = o.form.name,
                                     version = o.form.version,
                                     stopOnWarning = Request.FALSE,
+                                    maxPageSize = "No Max",
                                     formActions = o.actions.HasValue
                                     ? o.actions.Value.Select(a => a.action ?? FormAction.Make(a.formAction, l.Count(), e))
                                     : null
@@ -63,6 +64,7 @@ namespace Celin.AIS.Form
                                     formName = o.form.name,
                                     version = o.form.version,
                                     stopOnWarning = Request.FALSE,
+                                    maxPageSize = "No Max",
                                     formActions = o.actions.HasValue
                                     ? o.actions.Value.Select(a => a.action ?? FormAction.Make(a.formAction, 0, Enumerable.Empty<object>()))
                                     : null
