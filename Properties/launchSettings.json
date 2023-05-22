@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Celin.AIS.Form": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:64802;http://localhost:64803"
+    }
+  }
+}
