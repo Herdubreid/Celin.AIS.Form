@@ -7,7 +7,7 @@ namespace Celin.AIS.Form
     {
         public record Form(string name, string? version, bool demo);
         public record Type(Form form, Maybe<IEnumerable<Action.Type>> actions, Maybe<IEnumerable<Output.Type>> outputs);
-        static readonly Parser<char, (string form, Maybe<string> version)> FORM
+        public static readonly Parser<char, (string form, Maybe<string> version)> FORM
             = Map((f, v) => (f, v),
                 OneOf('w', 'W')
                   .Then(LetterOrDigit

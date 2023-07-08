@@ -31,7 +31,7 @@ namespace Celin.AIS.Form
                 }
                 : null,
                 Chain = es.HasValue
-                ? es.Value.Aggregate(Enumerable.Empty<Type>(),
+                    ? es.Value.Aggregate(Enumerable.Empty<Type>(),
                     (l, e) =>
                     {
                         var t = new Type(
