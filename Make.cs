@@ -16,7 +16,7 @@ namespace Celin.AIS.Form
 				specialValueId = AIS.Value.LITERAL
 			};
 		// Equal condition
-		public static AIS.Condition Equal(string controlId, string value)
+		public static Condition Equal(string controlId, string value)
 			=> new AIS.Condition
 			{
 				controlId = controlId,
@@ -46,20 +46,20 @@ namespace Celin.AIS.Form
 				condition = condition
 			};
 		// Open Stack Form
-		public static AIS.StackFormRequest Open(AIS.FormRequest fm)
-			=> new AIS.StackFormRequest
-			{
+		public static StackFormRequest Open(FormRequest fm)
+			=> new StackFormRequest
+            {
 				action = AIS.StackFormRequest.open,
 				formRequest = fm
 			};
 		static readonly Regex FormPat = new Regex("[^_]+_([^_]+).*");
 		// Execute Stack Form
-		public static AIS.StackFormRequest Execute(AIS.FormResponse rs, AIS.ActionRequest rq)
+		public static StackFormRequest Execute(FormResponse rs, ActionRequest rq)
 		{
 			rq.formOID = FormPat.Match(rs.currentApp).Groups[1].Value;
-			return new AIS.StackFormRequest
-			{
-				action = AIS.StackFormRequest.execute,
+			return new StackFormRequest
+            {
+				action = StackFormRequest.execute,
 				stackId = rs.stackId,
 				stateId = rs.stateId,
 				rid = rs.rid,
@@ -67,9 +67,9 @@ namespace Celin.AIS.Form
 			};
 		}
 		// Close Stack Form
-		public static AIS.StackFormRequest Close(AIS.FormResponse rs)
-			=> new AIS.StackFormRequest
-			{
+		public static StackFormRequest Close(FormResponse rs)
+			=> new StackFormRequest
+            {
 				action = AIS.StackFormRequest.close,
 				stackId = rs.stackId,
 				stateId = rs.stateId,
