@@ -41,7 +41,7 @@ namespace Celin.AIS.Form
                     command = AIS.GridAction.SetGridCellValue
                 })
             };
-        static IEnumerable<AIS.RowEvent> RowEvents(IEnumerable<RowType> rs)
+        static IEnumerable<RowEvent> RowEvents(IEnumerable<RowType> rs)
             => rs.Aggregate(Enumerable.Empty<AIS.RowEvent>(), (re, r) =>
             {
                 if (r.es.HasValue)
@@ -54,12 +54,12 @@ namespace Celin.AIS.Form
                     return re.Append(RowEvent(r, 0, Enumerable.Empty<object>()));
                 }
             });
-        static Parser<char, AIS.Grid> INSERT
+        static Parser<char, Grid> INSERT
             = Map((g, rs, es) => new AIS.GridInsert
             {
                 gridID = g,
                 gridRowInsertEvents = RowEvents(rs)
-            } as AIS.Grid,
+            } as Grid,
                 Data.Skipper.Next(Digit.AtLeastOnceString()),
                 Data.Skipper.Next(ROWEVENT.Separated(Whitespaces)),
                 Each.Parser.Optional())
@@ -75,11 +75,11 @@ namespace Celin.AIS.Form
                 Each.Parser.Optional())
             .Labelled("Grid Update");
         public static Parser<char, AIS.Grid> InsertParser
-            => String("insert")
+            => Try(String("insert"))
                 .Then(INSERT.Between(Char('['), SkipWhitespaces.Then(Char(']'))))
             .Labelled("Insert");
         public static Parser<char, AIS.Grid> UpdateParser
-            => String("update")
+            => Try(String("update"))
                 .Then(UPDATE.Between(Char('['), SkipWhitespaces.Then(Char(']'))))
             .Labelled("Update");
         public static Parser<char, Action.Type> Parser

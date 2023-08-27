@@ -46,6 +46,10 @@ namespace Celin.AIS.Form
             = Map((a, id) => new Type(id, a, Maybe.Nothing<Value.Type>()),
                 Try(String("select")).ThenReturn(AIS.FormAction.SelectRow),
                 SELECTPARAMETER.Between(Char('('), Char(')')));
+        static readonly Parser<char, Type> UNSELECTALL
+            = Map((a, id) => new Type(id, a, Maybe.Nothing<Value.Type>()),
+                Try(String("unselectAll")).ThenReturn(AIS.FormAction.UnSelectAllRows),
+                Digit.ManyString().Between(Char('('), Char(')')));
         static readonly Parser<char, (string id, Value.Type value)> QBEPARAMETERS
             = Map((g, id, v) => ($"{g}[{id}]", v),
                 Digit.ManyString(),
@@ -58,6 +62,6 @@ namespace Celin.AIS.Form
                 Try(String("qbe")).ThenReturn(AIS.FormAction.SetQBEValue),
                 QBEPARAMETERS.Between(Char('('), Char(')')));
         public static Parser<char, Action.Type> Parser
-            => OneOf(DO, SET, RADIO, SELECT, QBE).Select(t => new Action.Type(null, t));
+            => OneOf(DO, SET, RADIO, SELECT, UNSELECTALL, QBE).Select(t => new Action.Type(null, t));
     }
 }
