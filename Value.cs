@@ -8,7 +8,12 @@ namespace Celin.AIS.Form
         public record Type(bool variable, string literal, int index);
         static readonly Parser<char, Type> PLAIN
             = Try(LetterOrDigit.Or(Char('.')).ManyString().Select(s => new Type(false, s, -1)));
-        static readonly Parser<char, Type> QUOTED
+        static readonly Parser<char, Type> SINGLEEQUOTED
+            = AnyCharExcept('\'')
+                .ManyString()
+                .Between(Char('\''))
+              .Select(s => new Type(false, s, -1));
+        static readonly Parser<char, Type> DOUBLEQUOTED
             = AnyCharExcept('"')
                 .ManyString()
                 .Between(Char('"'))
@@ -23,6 +28,6 @@ namespace Celin.AIS.Form
             => Try(Char('$')
                 .Then(ROWVAR.Or(COLVAR)));
         public static Parser<char, Type> Literal
-            => QUOTED.Or(PLAIN);
+            => OneOf(DOUBLEQUOTED, SINGLEEQUOTED, PLAIN);
     }
 }
