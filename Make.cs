@@ -17,11 +17,19 @@ namespace Celin.AIS.Form
 			};
 		// Equal condition
 		public static Condition Equal(string controlId, string value)
-			=> new AIS.Condition
-			{
+			=> new Condition
+            {
 				controlId = controlId,
 				@operator = AIS.Condition.EQUAL,
 				value = List(Literal(value))
+			};
+		// Set FormAction
+		public static AIS.FormAction Set(string controlId, string value)
+			=> new AIS.FormAction
+			{
+				controlID = controlId,
+				command = AIS.FormAction.SetControlValue,
+				value = value
 			};
 		// Select FormAction
 		public static AIS.FormAction Select(int row)
