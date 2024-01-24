@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 
 namespace Celin.AIS.Form
 {
@@ -20,8 +21,16 @@ namespace Celin.AIS.Form
 			=> new Condition
             {
 				controlId = controlId,
-				@operator = AIS.Condition.EQUAL,
+				@operator = Condition.EQUAL,
 				value = List(Literal(value))
+			};
+		// QBE FormAction
+		public static AIS.FormAction QBE(string controlId, string value)
+			=> new AIS.FormAction
+			{
+				controlID = controlId,
+				command = AIS.FormAction.SetQBEValue,
+				value = value
 			};
 		// Set FormAction
 		public static AIS.FormAction Set(string controlId, string value)
@@ -46,7 +55,7 @@ namespace Celin.AIS.Form
 				command = AIS.FormAction.DoAction
 			};
 		// Query
-		public static AIS.Query Query(IEnumerable<AIS.Condition> condition)
+		public static Query Query(IEnumerable<AIS.Condition> condition)
 			=> new AIS.Query
 			{
 				matchType = AIS.Query.MATCH_ALL,
@@ -57,7 +66,7 @@ namespace Celin.AIS.Form
 		public static StackFormRequest Open(FormRequest fm)
 			=> new StackFormRequest
             {
-				action = AIS.StackFormRequest.open,
+				action = StackFormRequest.open,
 				formRequest = fm
 			};
 		static readonly Regex FormPat = new Regex("[^_]+_([^_]+).*");
@@ -78,7 +87,7 @@ namespace Celin.AIS.Form
 		public static StackFormRequest Close(FormResponse rs)
 			=> new StackFormRequest
             {
-				action = AIS.StackFormRequest.close,
+				action = StackFormRequest.close,
 				stackId = rs.stackId,
 				stateId = rs.stateId,
 				rid = rs.rid
