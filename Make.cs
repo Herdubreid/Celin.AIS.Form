@@ -28,7 +28,7 @@ namespace Celin.AIS.Form
 		public static AIS.FormAction QBE(string controlId, string value)
 			=> new AIS.FormAction
 			{
-				controlID = controlId,
+				controlID = $"1[{controlId}]",
 				command = AIS.FormAction.SetQBEValue,
 				value = value
 			};
@@ -44,7 +44,7 @@ namespace Celin.AIS.Form
 		public static AIS.FormAction Select(int row)
 			=> new AIS.FormAction
 			{
-				controlID = string.Format("1.{0}", row),
+				controlID = $"1.{row}",
 				command = AIS.FormAction.SelectRow
 			};
 		// Do FormAction
