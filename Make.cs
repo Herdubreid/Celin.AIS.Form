@@ -41,11 +41,32 @@ namespace Celin.AIS.Form
 				value = value
 			};
 		// Select FormAction
-		public static AIS.FormAction Select(int row)
+		public static AIS.FormAction Select(int row, int grid = 1)
 			=> new AIS.FormAction
 			{
-				controlID = $"1.{row}",
+				controlID = $"{grid}.{row}",
 				command = AIS.FormAction.SelectRow
+			};
+		// SelectAll FormAction
+		public static AIS.FormAction SelectAll(int grid = 1)
+			=> new AIS.FormAction
+			{
+				controlID = $"{grid}",
+				command = AIS.FormAction.SelectAllRows
+			};
+		// UnSelect FormAction
+		public static AIS.FormAction UnSelect(int row, int grid = 1)
+			=> new AIS.FormAction
+			{
+				controlID = $"{grid}.{row}",
+				command = AIS.FormAction.UnSelectRow
+			};
+		// UnSelectAll FormAction
+		public static AIS.FormAction UnSelectAll(int row, int grid = 1)
+			=> new AIS.FormAction
+			{
+				controlID = $"{grid}",
+				command = AIS.FormAction.UnSelectAllRows
 			};
 		// Do FormAction
 		public static AIS.FormAction Do(string controlId)
