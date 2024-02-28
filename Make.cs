@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Celin.AIS.Form
 {
@@ -76,7 +75,7 @@ namespace Celin.AIS.Form
 				command = AIS.FormAction.DoAction
 			};
 		// Query
-		public static Query Query(IEnumerable<AIS.Condition> condition)
+		public static Query Query(IEnumerable<Condition> condition)
 			=> new AIS.Query
 			{
 				matchType = AIS.Query.MATCH_ALL,
