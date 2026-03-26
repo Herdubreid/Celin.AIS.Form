@@ -9,9 +9,9 @@ namespace Celin.AIS.Form
         public static AIS.Action Make(Type? t, int row, IEnumerable<object> cols)
             => new AIS.FormAction
             {
-                command = t.cmd,
-                controlID = t.id,
-                value = t.value.HasValue
+                command = t?.cmd,
+                controlID = t?.id,
+                value = t?.value.HasValue == true
                     ? t.value.Value.variable
                         ? t.value.Value.index == -1
                             ? row.ToString()
